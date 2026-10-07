@@ -1,0 +1,226 @@
+{
+ "asOf": "2026-10-06",
+ "projects": [
+  {
+   "name": "Long Thành International",
+   "where": "Đồng Nai, Vietnam · 40 km east of Ho Chi Minh City",
+   "code": "LONG THÀNH",
+   "lat": 10.776,
+   "lng": 107.043,
+   "zoom": 14,
+   "approx": false,
+   "status": "opening",
+   "statusLabel": "Opening soon",
+   "milestone": {
+    "what": "Proposed commercial opening",
+    "date": "2026-12-01"
+   },
+   "facts": [
+    [
+     "Investment",
+     "~$16B, three phases"
+    ],
+    [
+     "Full capacity",
+     "100M pax · 5Mt cargo / yr"
+    ],
+    [
+     "Transfer plan",
+     "Long-haul moves from TSN Mar 2027; most international by Oct 2027"
+    ]
+   ],
+   "note": "ACV has proposed 20–50% cuts in service charges for airlines through 2027.",
+   "url": "https://vietnamnews.vn/economy/1785815/acv-proposes-december-1-commercial-opening-for-long-thanh-airport.html"
+  },
+  {
+   "name": "Western Sydney International",
+   "where": "Badgerys Creek, NSW, Australia",
+   "code": "WSI · YSWS",
+   "lat": -33.882,
+   "lng": 150.728,
+   "zoom": 14,
+   "approx": false,
+   "status": "opening",
+   "statusLabel": "Opening soon",
+   "milestone": {
+    "what": "First passenger flight (Jetstar to Gold Coast)",
+    "date": "2026-10-25"
+   },
+   "facts": [
+    [
+     "Freight",
+     "Qantas Freight since 27 Jul 2026"
+    ],
+    [
+     "Launch carriers",
+     "Jetstar 25 Oct · Air NZ 26 Oct · Singapore Airlines 23 Nov"
+    ],
+    [
+     "Role",
+     "Sydney's overnight freight hub from 1 Nov"
+    ]
+   ],
+   "note": "Sydney's second airport and its first with 24-hour operations.",
+   "url": "https://www.infrastructure.gov.au/department/media/news/western-sydney-airport-set-open"
+  },
+  {
+   "name": "Gia Bình International",
+   "where": "Bắc Ninh, Vietnam",
+   "code": "GIA BÌNH",
+   "lat": 21.045,
+   "lng": 106.215,
+   "zoom": 13,
+   "approx": true,
+   "status": "construction",
+   "statusLabel": "Under construction",
+   "milestone": {
+    "what": "Test flights targeted",
+    "date": "2026-12-31",
+    "label": "by end-2026"
+   },
+   "facts": [
+    [
+     "Site",
+     "~1,960 ha across four communes"
+    ],
+    [
+     "Target",
+     "Operating for APEC 2027"
+    ],
+    [
+     "Access",
+     "Sun Group road link to Hà Nội, ~$936M"
+    ]
+   ],
+   "note": "Site clearance 99% in Gia Bình and 97.2% in Lương Tài communes.",
+   "url": "https://en.baobacninhtv.vn/gia-binh-international-airport-gives-bac-ninh-new-wings-to-the-world.bbg?p=3"
+  },
+  {
+   "name": "Noida International",
+   "where": "Jewar, Uttar Pradesh, India",
+   "code": "DXN · VIDX",
+   "lat": 28.172,
+   "lng": 77.604,
+   "zoom": 14,
+   "approx": false,
+   "status": "operating",
+   "statusLabel": "Operating",
+   "milestone": {
+    "what": "First commercial flight (IndiGo from Lucknow)",
+    "date": "2026-06-15"
+   },
+   "facts": [
+    [
+     "Phase 1",
+     "12M pax / yr"
+    ],
+    [
+     "Build-out",
+     "Up to 6 runways, 225M pax / yr"
+    ],
+    [
+     "Operator",
+     "YIAPL (Zurich Airport AG)"
+    ]
+   ],
+   "note": "Aims to be India's first net-zero-emissions airport.",
+   "url": "https://airpowerasia.com/2026/06/20/noidas-jewar-airport-begins-operations-big-leap-for-indias-civil-aviation/"
+  },
+  {
+   "name": "Al Maktoum International expansion",
+   "where": "Dubai World Central, UAE",
+   "code": "DWC · OMDW",
+   "lat": 24.89,
+   "lng": 55.16,
+   "zoom": 13,
+   "approx": false,
+   "status": "construction",
+   "statusLabel": "Under construction",
+   "milestone": {
+    "what": "Phase 1 operations",
+    "date": "2032-01-01",
+    "label": "2032"
+   },
+   "facts": [
+    [
+     "Contracts",
+     "AED 13B under way; AED 55B more to award"
+    ],
+    [
+     "Capacity",
+     "260M+ pax · 12Mt cargo / yr"
+    ],
+    [
+     "Layout",
+     "5 runways, 7 concourses, 430+ stands"
+    ]
+   ],
+   "note": "17,000+ piles and 45M m³ of excavation done as of June 2026.",
+   "url": "https://whatson.ae/2026/06/heres-the-latest-update-on-dubais-future-mega-airport/"
+  },
+  {
+   "name": "King Salman International",
+   "where": "Riyadh, Saudi Arabia",
+   "code": "RUH · OERK",
+   "lat": 24.957,
+   "lng": 46.699,
+   "zoom": 13,
+   "approx": false,
+   "status": "construction",
+   "statusLabel": "Under construction",
+   "milestone": {
+    "what": "Start of operations",
+    "date": "2029-01-01",
+    "label": "2029"
+   },
+   "facts": [
+    [
+     "Runways",
+     "6"
+    ],
+    [
+     "Capacity target",
+     "120M pax / yr by 2030"
+    ],
+    [
+     "Footprint",
+     "57 km² incl. aerotropolis"
+    ]
+   ],
+   "note": "Built around the existing King Khalid airport as Riyadh Air's home hub.",
+   "url": "https://gulfnews.com/business/aviation/riyadhs-40-million-passenger-mega-terminal-will-transform-saudi-travel-1.500362633"
+  },
+  {
+   "name": "Heathrow third runway",
+   "where": "London, United Kingdom",
+   "code": "LHR · EGLL",
+   "lat": 51.488,
+   "lng": -0.495,
+   "zoom": 13,
+   "approx": false,
+   "status": "planning",
+   "statusLabel": "Planning",
+   "milestone": {
+    "what": "Earliest opening now cited",
+    "date": "2039-01-01",
+    "label": "2035–2039"
+   },
+   "facts": [
+    [
+     "Runway",
+     "Up to 3,500 m, all aircraft sizes"
+    ],
+    [
+     "Cost",
+     "£21B runway · £49B total plan"
+    ],
+    [
+     "Capacity",
+     "+276,000 flights → 756,000 / yr"
+    ]
+   ],
+   "note": "Map centres on the proposed site north-west of the current airfield.",
+   "url": "https://www.travelpulse.com/news/airlines-airports/heathrow-airport-expansion-stalls-as-plans-for-third-runway-pushed-back"
+  }
+ ]
+}

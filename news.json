@@ -1,0 +1,142 @@
+{
+ "updated": "2026-10-06T10:00:00Z",
+ "items": [
+  {
+   "date": "2026-10-02",
+   "cat": "Safety & regulation",
+   "vn": false,
+   "title": "FAA board finds 737 MAX software glitch poses no flight-safety risk",
+   "sum": "The issue can drop VNAV mode during a reprogrammed go-around. The finding clears a hurdle for 737 MAX 10 certification, which United, American, Alaska and Ryanair are waiting on.",
+   "src": "AeroTime",
+   "url": "https://www.aerotime.aero/articles/faa-boeing-737-max-software-no-safety-risk/amp"
+  },
+  {
+   "date": "2026-10-01",
+   "cat": "Airlines",
+   "vn": false,
+   "title": "Air New Zealand drops service to 11 airports",
+   "sum": "The carrier cites engine availability problems and fleet adjustments across Pacific and Americas routes.",
+   "src": "Simple Flying via RotatePilot",
+   "url": "https://rotatepilot.com/blog/daily-digest-2026-10-02"
+  },
+  {
+   "date": "2026-10-01",
+   "cat": "Manufacturers",
+   "vn": false,
+   "title": "Epic E1000 AX certified with Garmin Autoland",
+   "sum": "The FAA approved Garmin's emergency automatic landing system on Epic Aircraft's single-engine turboprop.",
+   "src": "AeroTime via RotatePilot",
+   "url": "https://rotatepilot.com/blog/daily-digest-2026-10-02"
+  },
+  {
+   "date": "2026-10-01",
+   "cat": "Safety & regulation",
+   "vn": false,
+   "title": "Medical helicopter crash off Catalina Island leaves two dead, one missing",
+   "sum": "A REACH Air Medical Services helicopter went down off the California coast on 1 October.",
+   "src": "AeroTime via RotatePilot",
+   "url": "https://rotatepilot.com/blog/daily-digest-2026-10-02"
+  },
+  {
+   "date": "2026-10-01",
+   "cat": "Airports",
+   "vn": false,
+   "title": "Newark Liberty plans $4.5M runway rehabilitation",
+   "sum": "The work follows a recent incident that damaged a runway surface.",
+   "src": "Simple Flying via RotatePilot",
+   "url": "https://rotatepilot.com/blog/daily-digest-2026-10-02"
+  },
+  {
+   "date": "2026-09-30",
+   "cat": "Market",
+   "vn": false,
+   "title": "Global passenger demand slips 0.8% in August",
+   "sum": "Middle East carriers fell 14.6%. Latin America, Africa and China domestic grew; India domestic fell 7.5%. IATA warns higher energy prices are eroding travelers' purchasing power.",
+   "src": "IATA",
+   "url": "https://iata.org/en/pressroom/2026-releases/09-30-air-passenger-demand-slips-august/"
+  },
+  {
+   "date": "2026-09-29",
+   "cat": "Market",
+   "vn": false,
+   "title": "Air cargo demand up 4.4% in August as load factors climb",
+   "sum": "North America led with +6.6%. Gulf-linked lanes still contracting: Europe–Middle East -12.1%, Middle East–Asia -11.0%.",
+   "src": "IATA",
+   "url": "https://www.iata.org/en/pressroom/2026-releases/09-29-air-cargo-demand-grows-august"
+  },
+  {
+   "date": "2026-09-27",
+   "cat": "Airports",
+   "vn": false,
+   "title": "Heathrow third runway slips from 2035 to as late as 2039",
+   "sum": "The airport called 2035 ambitious. The runway is costed at £21B within £49B of planned private investment; the Prime Minister has not endorsed it.",
+   "src": "TravelPulse",
+   "url": "https://www.travelpulse.com/news/airlines-airports/heathrow-airport-expansion-stalls-as-plans-for-third-runway-pushed-back"
+  },
+  {
+   "date": "2026-09-25",
+   "cat": "Airlines",
+   "vn": true,
+   "title": "Vietnam's registered fleet reaches a record 258 aircraft",
+   "sum": "Carriers are adding aircraft ahead of the Tết 2027 peak. Vietjet and Vietnam Airlines hold about 78% of the fleet.",
+   "src": "Viet Nam News",
+   "url": "https://vietnamnews.vn/economy/1800570/viet-nam-s-aircraft-fleet-hits-record-high-as-airlines-anticipate-growth.html"
+  },
+  {
+   "date": "2026-09-20",
+   "dateLabel": "Sep 2026",
+   "cat": "Airlines",
+   "vn": false,
+   "title": "Gulf airspace is open, but many carriers keep suspensions",
+   "sum": "Emirates has restored 96% of its network. BA's Dubai pause runs to 25 Oct, Cathay's Dubai and Riyadh to 30 Nov, Finnair's Dubai to 27 Mar 2027. EASA still flags high risk over Gulf waters.",
+   "src": "Business Traveller",
+   "url": "https://www.businesstraveller.com/news/middle-east-airline-flight-suspensions-dubai-2026/"
+  },
+  {
+   "date": "2026-09-09",
+   "dateLabel": "Sep 2026",
+   "cat": "Manufacturers",
+   "vn": false,
+   "title": "Boeing hands over 51 jets in August, 418 year to date",
+   "sum": "41 were 737 MAX. Orders were weak at 15, mostly 787s.",
+   "src": "AirData News",
+   "url": "https://www.airdatanews.com/boeing-delivers-51-aircraft-in-august-reaches-418-in-2026/"
+  },
+  {
+   "date": "2026-09-07",
+   "cat": "Manufacturers",
+   "vn": false,
+   "title": "Airbus August deliveries up 9%, still behind its 870 target",
+   "sum": "The A321neo led with 26 deliveries in the month. Airbus needs a sharp year-end ramp to reach its goal.",
+   "src": "RotatePilot",
+   "url": "https://rotatepilot.com/news/airbus-boosts-august-deliveries-9-but-remains-behind-pace-for-870-aircraft-2026--2026-09-07"
+  },
+  {
+   "date": "2026-09-02",
+   "cat": "Airports",
+   "vn": true,
+   "title": "Gia Binh airport site clearance near complete, test flights by year end",
+   "sum": "Tower, VIP terminal and runway are being built in parallel so the airport can serve APEC 2027.",
+   "src": "Bac Ninh Newspaper",
+   "url": "https://en.baobacninhtv.vn/gia-binh-international-airport-gives-bac-ninh-new-wings-to-the-world.bbg?p=3"
+  },
+  {
+   "date": "2026-09-01",
+   "cat": "Market",
+   "vn": false,
+   "title": "Jet fuel up 121% in a year, with Japan and India hit hardest",
+   "sum": "Currency moves amplified the shock: +173% in yen and +170% in rupees, against +86% in Brazil and Mexico. Airlines hedged about a third of 2026 consumption.",
+   "src": "AFM / IATA",
+   "url": "https://afm.aero/iata-reports-121percent-global-jet-fuel-price-shock-in-2026-with-india-and-japan-most-exposed"
+  },
+  {
+   "date": "2026-07-31",
+   "cat": "Airports",
+   "vn": true,
+   "title": "ACV proposes 1 December opening for Long Thành",
+   "sum": "First routes would be Vietnam Airlines to Beijing, Hong Kong, Guangzhou, Manila and Hà Nội, and Vietjet domestic. Long-haul moves from March 2027, with 20–50% fee discounts for airlines.",
+   "src": "Viet Nam News",
+   "url": "https://vietnamnews.vn/economy/1785815/acv-proposes-december-1-commercial-opening-for-long-thanh-airport.html"
+  }
+ ]
+}

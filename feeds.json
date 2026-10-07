@@ -1,0 +1,16 @@
+{
+  "_comment": "News sources read by update_news.py. Add or remove feeds freely. 'cat' is a fallback category used when no keyword rule matches; 'vn' marks every item from that feed as Vietnam news.",
+  "feeds": [
+    {"name": "Google News: airlines", "url": "https://news.google.com/rss/search?q=airline+OR+airlines+when:2d&hl=en-US&gl=US&ceid=US:en", "cat": "Airlines"},
+    {"name": "Google News: aircraft makers", "url": "https://news.google.com/rss/search?q=Airbus+OR+Boeing+OR+Embraer+OR+COMAC+aircraft+when:2d&hl=en-US&gl=US&ceid=US:en", "cat": "Manufacturers"},
+    {"name": "Google News: airport projects", "url": "https://news.google.com/rss/search?q=%22new+airport%22+OR+%22airport+expansion%22+OR+%22new+terminal%22+OR+runway+construction+when:3d&hl=en-US&gl=US&ceid=US:en", "cat": "Airports"},
+    {"name": "Google News: aviation safety", "url": "https://news.google.com/rss/search?q=FAA+OR+EASA+OR+NTSB+aviation+safety+when:2d&hl=en-US&gl=US&ceid=US:en", "cat": "Safety & regulation"},
+    {"name": "Google News: aviation market", "url": "https://news.google.com/rss/search?q=IATA+OR+%22jet+fuel%22+OR+%22air+cargo%22+OR+%22passenger+demand%22+when:3d&hl=en-US&gl=US&ceid=US:en", "cat": "Market"},
+    {"name": "Google News: Vietnam aviation (EN)", "url": "https://news.google.com/rss/search?q=Vietjet+OR+%22Vietnam+Airlines%22+OR+%22Long+Thanh%22+OR+%22Tan+Son+Nhat%22+OR+%22Gia+Binh+airport%22+when:3d&hl=en-US&gl=US&ceid=US:en", "cat": "Airlines", "vn": true},
+    {"name": "Google News: hàng không Việt Nam", "url": "https://news.google.com/rss/search?q=h%C3%A0ng+kh%C3%B4ng+OR+s%C3%A2n+bay+when:2d&hl=vi&gl=VN&ceid=VN:vi", "cat": "Airlines", "vn": true},
+    {"name": "Simple Flying", "url": "https://simpleflying.com/feed/", "cat": "Airlines"},
+    {"name": "AirlineGeeks", "url": "https://airlinegeeks.com/feed/", "cat": "Airlines"},
+    {"name": "Airport World", "url": "https://airport-world.com/feed/", "cat": "Airports"},
+    {"name": "International Airport Review", "url": "https://www.internationalairportreview.com/feed/", "cat": "Airports"}
+  ]
+}

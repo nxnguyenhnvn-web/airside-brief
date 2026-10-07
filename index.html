@@ -1,0 +1,427 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="description" content="Air transport news, macro indicators and airport projects with satellite imagery. Updated daily.">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='6' fill='%230f1a22'/%3E%3Cpath d='M16 5l2.2 8.3 8.8 3.7-8.8 1.6L17 27l-1 0-1-8.4-8.8-1.6 8.8-3.7z' fill='%23f0a83a'/%3E%3C/svg%3E">
+<title>Airside Brief</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Barlow+Semi+Condensed:wght@500;600;700&family=Source+Sans+3:wght@400;600&family=IBM+Plex+Mono:wght@400;500&display=swap">
+<style>
+html{color-scheme:light}
+
+/* Layout: ops-board header with live Z/local clocks → macro strip + diverging chart → filterable news wire → airport project cards, each with a satellite plate */
+:root{
+  color-scheme:light;
+  --bg:#eef1f4; --surface:#fbfcfd; --sunk:#e3e8ed; --ink:#14202b; --muted:#56646f; --line:#d3dae1;
+  --accent:#a65f00; --accent-soft:#f6e6cc; --signal:#0a6782;
+  --good:#1d7f47; --bad:#b8342a; --warn:#9a6a00; --plate:#0f1a22; --plate-ink:#d9e4ec;
+  --f-display:"Barlow Semi Condensed","Arial Narrow",Arial,sans-serif;
+  --f-body:"Source Sans 3","Segoe UI",system-ui,sans-serif;
+  --f-mono:"IBM Plex Mono",ui-monospace,Menlo,Consolas,monospace;
+}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){
+  --bg:#0c1319; --surface:#131d26; --sunk:#0f171e; --ink:#e3eaf0; --muted:#8d9cab; --line:#24323e;
+  --accent:#f0a83a; --accent-soft:#3a2a12; --signal:#55c3dd;
+  --good:#52c283; --bad:#f07468; --warn:#e5b64a; --plate:#081016; --plate-ink:#d9e4ec; color-scheme:dark}}
+:root[data-theme="dark"]{
+  --bg:#0c1319; --surface:#131d26; --sunk:#0f171e; --ink:#e3eaf0; --muted:#8d9cab; --line:#24323e;
+  --accent:#f0a83a; --accent-soft:#3a2a12; --signal:#55c3dd;
+  --good:#52c283; --bad:#f07468; --warn:#e5b64a; --plate:#081016; --plate-ink:#d9e4ec; color-scheme:dark}
+
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--ink);font:16px/1.5 var(--f-body);padding-inline:16px;padding-block:0 48px;-webkit-text-size-adjust:100%}
+img{max-width:100%}
+[hidden]{display:none!important}
+.more{align-self:flex-start;font:600 14px/1 var(--f-body);padding:10px 14px;border-radius:8px;border:1px solid var(--line);background:var(--surface);color:var(--ink);cursor:pointer;margin-top:12px}
+.more:hover{border-color:var(--accent)}
+.loading{padding:24px 0;color:var(--muted)}
+.wrap{max-width:1180px;margin:0 auto;display:flex;flex-direction:column;gap:36px}
+a{color:var(--signal)}
+a:focus-visible,button:focus-visible,input:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+h1,h2,h3{font-family:var(--f-display);text-wrap:balance;margin:0;line-height:1.1}
+.label{font:600 12px/1.2 var(--f-body);letter-spacing:.08em;text-transform:uppercase;color:var(--muted)}
+.mono{font-family:var(--f-mono);font-variant-numeric:tabular-nums}
+
+/* header */
+header.board{position:sticky;top:env(safe-area-inset-top,0px);z-index:500;background:var(--bg);border-bottom:1px solid var(--line);padding-block:14px 12px;display:flex;flex-wrap:wrap;gap:12px 24px;align-items:center;justify-content:space-between}
+.brand{display:flex;align-items:baseline;gap:12px;flex-wrap:wrap}
+.brand h1{font-size:28px;font-weight:700;letter-spacing:.01em}
+.brand h1 span{color:var(--accent)}
+.brand .sub{color:var(--muted);font-size:14px}
+.clocks{display:flex;gap:16px;align-items:center;flex-wrap:wrap}
+.clock{display:flex;flex-direction:column;gap:2px}
+.clock b{font:500 18px/1 var(--f-mono);font-variant-numeric:tabular-nums}
+nav.jump{display:flex;gap:6px;flex-wrap:wrap}
+nav.jump a{font:600 13px/1 var(--f-body);text-decoration:none;color:var(--ink);padding:8px 12px;border:1px solid var(--line);border-radius:999px;background:var(--surface)}
+nav.jump a:hover{border-color:var(--accent)}
+
+section{display:flex;flex-direction:column;gap:16px;scroll-margin-top:120px}
+.sec-head{display:flex;flex-wrap:wrap;align-items:end;justify-content:space-between;gap:8px 16px}
+.sec-head h2{font-size:30px;font-weight:600}
+.sec-head p{margin:4px 0 0;color:var(--muted);max-width:65ch}
+
+/* macro */
+.kpis{display:grid;grid-template-columns:repeat(auto-fit,minmax(170px,1fr));gap:1px;background:var(--line);border:1px solid var(--line);border-radius:10px;overflow:hidden}
+.kpi{background:var(--surface);padding:14px 16px;display:flex;flex-direction:column;gap:6px;min-width:0}
+.kpi .v{font:600 30px/1 var(--f-display);font-variant-numeric:tabular-nums;display:flex;align-items:baseline;gap:8px;flex-wrap:wrap}
+.kpi .v small{font:500 13px/1 var(--f-mono)}
+.kpi .n{font-size:13px;color:var(--muted);line-height:1.35}
+.up{color:var(--good)} .down{color:var(--bad)}
+.macro-grid{display:grid;grid-template-columns:minmax(0,1.35fr) minmax(0,1fr);gap:16px}
+@media (max-width:860px){.macro-grid{grid-template-columns:1fr}}
+.panel{background:var(--surface);border:1px solid var(--line);border-radius:10px;padding:16px;display:flex;flex-direction:column;gap:12px;min-width:0}
+.panel h3{font-size:20px;font-weight:600}
+.seg{display:inline-flex;border:1px solid var(--line);border-radius:8px;overflow:hidden}
+.seg button{font:600 13px/1 var(--f-body);padding:8px 12px;background:transparent;color:var(--muted);border:0;cursor:pointer}
+.seg button[aria-pressed="true"]{background:var(--ink);color:var(--surface)}
+.chart{width:100%;overflow-x:auto}
+.chart svg{display:block;width:100%;min-width:360px;height:auto}
+.outlook{display:flex;flex-direction:column;gap:14px}
+.ol-row{display:grid;grid-template-columns:minmax(0,1fr) auto;gap:4px 12px;align-items:baseline}
+.ol-row .bars{grid-column:1/-1;display:flex;flex-direction:column;gap:3px}
+.bar{height:8px;border-radius:2px;background:var(--line)}
+.bar.now{background:var(--accent)}
+.ol-row .vals{font:500 13px/1 var(--f-mono);color:var(--muted);font-variant-numeric:tabular-nums}
+.ol-row .vals b{color:var(--ink);font-weight:500}
+.src{font-size:12px;color:var(--muted)}
+
+/* news */
+.filters{display:flex;gap:8px;flex-wrap:wrap;align-items:center}
+.chip{font:600 13px/1 var(--f-body);padding:8px 12px;border-radius:999px;border:1px solid var(--line);background:var(--surface);color:var(--ink);cursor:pointer}
+.chip[aria-pressed="true"]{background:var(--ink);color:var(--surface);border-color:var(--ink)}
+.chip .c{font-family:var(--f-mono);opacity:.7;margin-left:4px}
+#q{font:15px var(--f-body);padding:8px 12px;border:1px solid var(--line);border-radius:8px;background:var(--surface);color:var(--ink);min-width:0;flex:1 1 200px;max-width:320px}
+.wire{display:flex;flex-direction:column;border-top:1px solid var(--line)}
+.item{display:grid;grid-template-columns:96px minmax(0,1fr);gap:4px 18px;padding:14px 0;border-bottom:1px solid var(--line)}
+.item time{font:500 13px/1.6 var(--f-mono);color:var(--muted);font-variant-numeric:tabular-nums}
+.item h3{font:600 19px/1.25 var(--f-display)}
+.item h3 a{color:var(--ink);text-decoration:none}
+.item h3 a:hover{color:var(--signal);text-decoration:underline}
+.item p{margin:4px 0 6px;color:var(--ink);opacity:.85;max-width:72ch;font-size:15px}
+.meta{display:flex;gap:8px;flex-wrap:wrap;align-items:center;font-size:12px;color:var(--muted)}
+.tag{font:600 11px/1 var(--f-body);letter-spacing:.06em;text-transform:uppercase;padding:4px 7px;border-radius:4px;background:var(--sunk);color:var(--muted)}
+.tag.vn{background:var(--accent-soft);color:var(--accent)}
+@media (max-width:560px){.item{grid-template-columns:1fr}}
+.empty{padding:24px 0;color:var(--muted)}
+
+/* projects */
+.projects{display:grid;grid-template-columns:repeat(auto-fill,minmax(340px,1fr));gap:16px}
+@media (max-width:420px){.projects{grid-template-columns:1fr}}
+.proj{background:var(--surface);border:1px solid var(--line);border-radius:10px;overflow:hidden;display:flex;flex-direction:column;min-width:0}
+.plate{position:relative;aspect-ratio:16/10;max-width:100%;background:var(--plate);color:var(--plate-ink)}
+.plate .map{position:absolute;inset:0}
+.plate .fallback{position:absolute;inset:0;display:flex;flex-direction:column;justify-content:center;align-items:center;gap:10px;padding:16px;text-align:center;
+  background:radial-gradient(circle at 50% 50%,rgba(255,255,255,.06) 0 1px,transparent 1px) 0 0/22px 22px,var(--plate)}
+.plate .fallback svg{width:70px;height:70px;opacity:.85}
+.plate .fallback .co{font:500 13px/1.3 var(--f-mono)}
+.plate .fallback .why{font-size:12px;opacity:.7;max-width:34ch}
+.plate .code{position:absolute;left:10px;top:10px;z-index:450;font:600 13px/1 var(--f-mono);background:rgba(8,16,22,.78);color:#fff;padding:6px 8px;border-radius:4px;letter-spacing:.05em}
+.plate .approx{position:absolute;right:10px;top:10px;z-index:450;font:600 11px/1 var(--f-body);background:rgba(8,16,22,.78);color:#ffd28a;padding:5px 7px;border-radius:4px}
+.proj-body{padding:14px 16px 16px;display:flex;flex-direction:column;gap:10px;flex:1}
+.proj-top{display:flex;justify-content:space-between;align-items:start;gap:10px}
+.proj h3{font-size:22px;font-weight:600}
+.proj .where{font-size:13px;color:var(--muted)}
+.pill{flex:none;font:600 11px/1 var(--f-body);letter-spacing:.06em;text-transform:uppercase;padding:5px 8px;border-radius:999px;border:1px solid currentColor;white-space:nowrap}
+.pill.operating{color:var(--good)} .pill.opening{color:var(--accent)} .pill.construction{color:var(--signal)} .pill.planning{color:var(--muted)}
+.milestone{display:flex;align-items:baseline;justify-content:space-between;gap:10px;padding:10px 12px;background:var(--sunk);border-radius:8px;flex-wrap:wrap}
+.milestone .what{font-size:14px}
+.milestone .when{font:500 14px/1 var(--f-mono);font-variant-numeric:tabular-nums;white-space:nowrap}
+.milestone .when b{color:var(--accent);font-weight:500}
+dl.facts{display:grid;grid-template-columns:auto minmax(0,1fr);gap:6px 14px;margin:0;font-size:14px}
+dl.facts dt{color:var(--muted)}
+dl.facts dd{margin:0}
+.proj p.note{margin:0;font-size:14px;opacity:.85}
+.sat-links{display:flex;flex-wrap:wrap;gap:6px;margin-top:auto;padding-top:4px}
+.sat-links a{font:600 12px/1 var(--f-body);text-decoration:none;padding:7px 9px;border:1px solid var(--line);border-radius:6px;color:var(--ink);background:var(--surface)}
+.sat-links a:hover{border-color:var(--signal);color:var(--signal)}
+footer{color:var(--muted);font-size:13px;border-top:1px solid var(--line);padding-top:16px;display:flex;flex-direction:column;gap:6px}
+
+/* minimal Leaflet core */
+.leaflet-pane,.leaflet-tile,.leaflet-marker-icon,.leaflet-tile-container,.leaflet-pane>svg,.leaflet-layer{position:absolute;left:0;top:0}
+.leaflet-container{overflow:hidden;background:var(--plate);outline:0;font:12px var(--f-body);-webkit-tap-highlight-color:transparent}
+.leaflet-tile,.leaflet-marker-icon{user-select:none;-webkit-user-drag:none}
+.leaflet-container img.leaflet-tile{max-width:none!important;max-height:none!important}
+.leaflet-tile{visibility:hidden}.leaflet-tile-loaded{visibility:inherit}
+.leaflet-zoom-animated{transform-origin:0 0}
+.leaflet-zoom-anim .leaflet-zoom-animated{transition:transform .25s cubic-bezier(0,0,.25,1)}
+.leaflet-pane{z-index:400}.leaflet-tile-pane{z-index:200}.leaflet-overlay-pane{z-index:400}.leaflet-marker-pane{z-index:600}
+.leaflet-control-container .leaflet-top,.leaflet-control-container .leaflet-bottom{position:absolute;z-index:800;pointer-events:none}
+.leaflet-top{top:0}.leaflet-bottom{bottom:0}.leaflet-left{left:0}.leaflet-right{right:0}
+.leaflet-control{position:relative;z-index:800;pointer-events:auto;float:left;clear:both}
+.leaflet-right .leaflet-control{float:right}
+.leaflet-bottom .leaflet-control{margin-bottom:0}
+.leaflet-left .leaflet-control{margin-left:10px}.leaflet-top .leaflet-control{margin-top:44px}
+.leaflet-control-zoom a{display:block;width:28px;height:28px;line-height:26px;text-align:center;text-decoration:none;background:rgba(8,16,22,.8);color:#fff;font:600 16px/26px var(--f-mono)}
+.leaflet-control-zoom a:first-child{border-radius:4px 4px 0 0}.leaflet-control-zoom a:last-child{border-radius:0 0 4px 4px}
+.leaflet-control-attribution{background:rgba(8,16,22,.7);color:#cfd8df;padding:2px 6px;font-size:10px}
+.leaflet-control-attribution a{color:#cfd8df}
+.leaflet-grab{cursor:grab}.leaflet-dragging .leaflet-grab{cursor:grabbing}
+.pin{width:18px!important;height:18px!important;margin:-9px 0 0 -9px!important;border:2px solid #ffb547;border-radius:50%;box-shadow:0 0 0 4px rgba(255,181,71,.25)}
+@media (prefers-reduced-motion:reduce){.leaflet-zoom-anim .leaflet-zoom-animated{transition:none}}
+</style>
+
+</head>
+<body>
+<div class="wrap">
+  <header class="board">
+    <div class="brand">
+      <h1>Airside <span>Brief</span></h1>
+      <span class="sub" id="asof"></span>
+    </div>
+    <nav class="jump" aria-label="Sections">
+      <a href="#macro">Macro</a><a href="#news">News</a><a href="#projects">Airport projects</a>
+    </nav>
+    <div class="clocks" aria-label="Clocks">
+      <div class="clock"><span class="label">UTC</span><b id="zclock">--:--Z</b></div>
+      <div class="clock"><span class="label">Local</span><b id="lclock">--:--</b></div>
+    </div>
+  </header>
+
+  <section id="macro">
+    <div class="sec-head">
+      <div>
+        <h2>Macro</h2>
+        <p>Latest monthly traffic data and the industry outlook. Fuel is the story of 2026: the February Iran conflict pushed jet fuel up sharply and cut Middle East traffic.</p>
+      </div>
+    </div>
+    <div class="kpis" id="kpis"></div>
+    <div class="macro-grid">
+      <div class="panel">
+        <div class="sec-head">
+          <div><h3 id="chart-title">Traffic by region, year on year</h3><div class="src" id="chart-src"></div></div>
+          <div class="seg" role="group" aria-label="Traffic type">
+            <button type="button" id="seg-pax" aria-pressed="true">Passenger RPK</button>
+            <button type="button" id="seg-cargo" aria-pressed="false">Cargo CTK</button>
+          </div>
+        </div>
+        <div class="chart" id="chart"></div>
+      </div>
+      <div class="panel">
+        <div><h3>IATA 2026 outlook vs 2025</h3><div class="src" id="ol-src"></div></div>
+        <div class="outlook" id="outlook"></div>
+      </div>
+    </div>
+  </section>
+
+  <section id="news">
+    <div class="sec-head">
+      <div><h2>News wire</h2><p>Collected every morning from aviation news feeds, newest first. Vietnam items are flagged.</p></div>
+    </div>
+    <div class="filters">
+      <div id="chips" style="display:flex;gap:8px;flex-wrap:wrap"></div>
+      <input id="q" type="search" placeholder="Search headlines" aria-label="Search headlines">
+    </div>
+    <div class="wire" id="wire"><div class="loading">Loading news…</div></div>
+    <button type="button" class="more" id="more" hidden>Show more</button>
+  </section>
+
+  <section id="projects">
+    <div class="sec-head">
+      <div><h2>Airport projects</h2><p>Satellite view of each site, with the next milestone counted down from today. Drag or zoom the imagery; the links open recent Sentinel-2 passes and historical imagery to track construction.</p></div>
+    </div>
+    <div class="projects" id="projgrid"></div>
+  </section>
+
+  <footer>
+    <div>Imagery: Esri World Imagery (Maxar, Earthstar Geographics), Copernicus Sentinel-2, NASA GIBS. Figures as reported by the linked sources.</div>
+    <div id="foot-asof"></div>
+  </footer>
+</div>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.js"></script>
+<script>
+(async function(){
+  const get = async p => { const r = await fetch(p + '?v=' + Date.now()); if (!r.ok) throw new Error(p + ' ' + r.status); return r.json(); };
+  let macro, newsFile, projFile;
+  try {
+    [macro, newsFile, projFile] = await Promise.all([get('data/macro.json'), get('data/news.json'), get('data/projects.json')]);
+  } catch (err) {
+    document.getElementById('wire').innerHTML = '<div class="empty">Could not load the data files. If you opened index.html directly from your disk, start a local server instead (see README).</div>';
+    console.error(err); return;
+  }
+  const D = Object.assign({}, macro, {news: newsFile.items || [], projects: projFile.projects || [], newsUpdated: newsFile.updated});
+  const $ = s => document.querySelector(s);
+  const esc = s => String(s).replace(/[&<>"]/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
+  const MON = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
+  const fmtDate = iso => { const [y,m,d] = iso.split('-').map(Number); return `${String(d).padStart(2,'0')} ${MON[m-1]} ${y}`; };
+
+  const ago = iso => { const m = Math.round((Date.now() - new Date(iso)) / 60000); return m < 60 ? m + ' min ago' : m < 1440 ? Math.round(m/60) + ' h ago' : Math.round(m/1440) + ' d ago'; };
+  $('#asof').textContent = 'Air transport · news updated ' + (D.newsUpdated ? ago(D.newsUpdated) : '—');
+  $('#foot-asof').textContent = 'News feed updated ' + (D.newsUpdated ? new Date(D.newsUpdated).toUTCString() : '—') + '. Macro figures as of ' + fmtDate(macro.asOf) + ', projects as of ' + fmtDate(projFile.asOf) + '. Countdowns are computed from today.';
+
+  // clocks
+  const tz = Intl.DateTimeFormat().resolvedOptions().timeZone || 'Local';
+  function tick(){
+    const n = new Date();
+    $('#zclock').textContent = n.toISOString().slice(11,16) + 'Z';
+    $('#lclock').textContent = n.toLocaleTimeString([], {hour:'2-digit',minute:'2-digit',hour12:false});
+    $('#lclock').title = tz;
+  }
+  tick(); setInterval(tick, 15000);
+
+  // KPIs
+  $('#kpis').innerHTML = D.kpis.map(k => `
+    <div class="kpi">
+      <span class="label">${esc(k.label)}</span>
+      <span class="v ${k.dir==='down'?'down':k.dir==='up'?'up':''}">${esc(k.value)} <small class="label" style="letter-spacing:0">${esc(k.sub)}</small></span>
+      <span class="n">${esc(k.note)} <a href="${esc(k.url)}" target="_blank" rel="noopener">Source</a></span>
+    </div>`).join('');
+
+  // diverging bar chart
+  function drawChart(key){
+    const R = D.regions[key];
+    $('#chart-title').textContent = R.title;
+    $('#chart-src').innerHTML = `Global ${R.global>0?'+':''}${R.global}% · <a href="${esc(R.url)}" target="_blank" rel="noopener">${esc(R.src)}</a>`;
+    const rows = R.rows, W = 600, rowH = 30, top = 22, labelW = 124, pad = 64;
+    const H = top + rows.length*rowH + 10;
+    const vals = rows.map(r=>r[1]).concat([R.global]);
+    const lim = Math.ceil(Math.max(...vals.map(Math.abs))/5)*5 || 5;
+    const x0 = labelW + pad, x1 = W - 52;
+    const sx = v => x0 + (v + lim) / (2*lim) * (x1 - x0);
+    const zero = sx(0);
+    let ticks = '';
+    for (let t = -lim; t <= lim; t += 5){
+      ticks += `<line x1="${sx(t)}" x2="${sx(t)}" y1="${top-6}" y2="${H-8}" stroke="var(--line)" stroke-width="1"/>
+                <text x="${sx(t)}" y="${top-10}" text-anchor="middle" font-size="11" fill="var(--muted)" font-family="var(--f-mono)">${t>0?'+':''}${t}%</text>`;
+    }
+    const gx = sx(R.global);
+    let bars = rows.map((r,i) => {
+      const y = top + i*rowH + 6, v = r[1], x = Math.min(zero, sx(v)), w = Math.abs(sx(v)-zero);
+      const col = v >= 0 ? 'var(--good)' : 'var(--bad)';
+      const tx = v >= 0 ? sx(v)+6 : sx(v)-6, anchor = v >= 0 ? 'start' : 'end';
+      return `<text x="${labelW}" y="${y+13}" text-anchor="end" font-size="13" fill="var(--ink)" font-family="var(--f-body)">${esc(r[0])}</text>
+        <rect x="${x}" y="${y}" width="${Math.max(w,1)}" height="18" rx="2" fill="${col}" opacity=".85"/>
+        <text x="${tx}" y="${y+13}" text-anchor="${anchor}" font-size="12" fill="var(--ink)" font-family="var(--f-mono)">${v>0?'+':''}${v.toFixed(1)}%</text>`;
+    }).join('');
+    $('#chart').innerHTML = `<svg viewBox="0 0 ${W} ${H}" role="img" aria-label="${esc(R.title)}">
+      ${ticks}
+      <line x1="${zero}" x2="${zero}" y1="${top-6}" y2="${H-8}" stroke="var(--muted)" stroke-width="1.2"/>
+      ${bars}
+      <line x1="${gx}" x2="${gx}" y1="${top-2}" y2="${H-8}" stroke="var(--accent)" stroke-width="2" stroke-dasharray="4 3"/>
+      <text x="${gx+4}" y="${H-12}" font-size="11" fill="var(--accent)" font-family="var(--f-mono)">global</text>
+    </svg>`;
+    $('#seg-pax').setAttribute('aria-pressed', key==='pax');
+    $('#seg-cargo').setAttribute('aria-pressed', key==='cargo');
+  }
+  $('#seg-pax').onclick = () => drawChart('pax');
+  $('#seg-cargo').onclick = () => drawChart('cargo');
+  drawChart('pax');
+
+  // outlook
+  const O = D.outlook;
+  $('#ol-src').innerHTML = `<a href="${esc(O.url)}" target="_blank" rel="noopener">${esc(O.src)}</a>`;
+  const f = (fmt,v) => fmt.includes('%%') ? fmt.replace('%%', v + '%') : fmt.replace('%', v);
+  $('#outlook').innerHTML = O.rows.map(r => {
+    const m = Math.max(r.a, r.b);
+    return `<div class="ol-row">
+      <span>${esc(r.label)}</span>
+      <span class="vals">2025 ${f(r.fmt,r.a)} → <b>2026F ${f(r.fmt,r.b)}</b></span>
+      <div class="bars" aria-hidden="true">
+        <div class="bar" style="width:${r.a/m*100}%"></div>
+        <div class="bar now" style="width:${r.b/m*100}%"></div>
+      </div>
+      ${r.note?`<span class="src" style="grid-column:1/-1">${esc(r.note)}</span>`:''}
+    </div>`;
+  }).join('') + `<div class="src">Grey: 2025 · Amber: 2026 forecast</div>`;
+
+  // news
+  const cats = ['All','Vietnam', ...Array.from(new Set(D.news.map(n=>n.cat)))];
+  let cat = 'All', q = '', shown = 30;
+  try { const s = localStorage.getItem('ab-cat'); if (s && cats.includes(s)) cat = s; } catch(e){}
+  function count(c){ return c==='All' ? D.news.length : c==='Vietnam' ? D.news.filter(n=>n.vn).length : D.news.filter(n=>n.cat===c).length; }
+  function renderChips(){
+    $('#chips').innerHTML = cats.map(c => `<button type="button" class="chip" aria-pressed="${c===cat}" data-c="${esc(c)}">${esc(c)}<span class="c">${count(c)}</span></button>`).join('');
+  }
+  function renderNews(){
+    const list = D.news.slice().sort((a,b)=>b.date.localeCompare(a.date)).filter(n =>
+      (cat==='All' || (cat==='Vietnam' ? n.vn : n.cat===cat)) &&
+      (!q || (n.title+' '+(n.sum||'')+' '+(n.src||'')).toLowerCase().includes(q)));
+    $('#more').hidden = list.length <= shown;
+    $('#more').textContent = `Show more (${list.length - shown} older)`;
+    $('#wire').innerHTML = list.length ? list.slice(0, shown).map(n => `
+      <article class="item">
+        <time datetime="${n.date}">${esc(n.dateLabel || fmtDate(n.date))}</time>
+        <div>
+          <h3><a href="${esc(n.url)}" target="_blank" rel="noopener">${esc(n.title)}</a></h3>
+          ${n.sum ? `<p>${esc(n.sum)}</p>` : ''}
+          <div class="meta"><span class="tag">${esc(n.cat)}</span>${n.vn?'<span class="tag vn">Vietnam</span>':''}<span>${esc(n.src || '')}</span></div>
+        </div>
+      </article>`).join('') : `<div class="empty">No stories match. Clear the search or pick another category.</div>`;
+  }
+  $('#chips').addEventListener('click', e => {
+    const b = e.target.closest('.chip'); if (!b) return;
+    cat = b.dataset.c; shown = 30; try { localStorage.setItem('ab-cat', cat); } catch(e){}
+    renderChips(); renderNews();
+  });
+  $('#q').addEventListener('input', e => { q = e.target.value.trim().toLowerCase(); shown = 30; renderNews(); });
+  $('#more').addEventListener('click', () => { shown += 30; renderNews(); });
+  renderChips(); renderNews();
+
+  // projects
+  const today = new Date(); today.setHours(0,0,0,0);
+  function countdown(p){
+    const m = p.milestone, d = new Date(m.date+'T00:00:00'), days = Math.round((d - today)/86400000);
+    if (m.label) return days > 0 && days <= 400 ? `${esc(m.label)} · <b>T−${days} d</b>` : esc(m.label);
+    if (days > 0) return `${fmtDate(m.date)} · <b>T−${days} d</b>`;
+    if (days === 0) return `${fmtDate(m.date)} · <b>today</b>`;
+    return `${fmtDate(m.date)} · ${-days} d ago`;
+  }
+  const links = p => {
+    const {lat,lng} = p, d = 0.06;
+    return [
+      ['Google satellite', `https://www.google.com/maps/@${lat},${lng},${p.zoom>=14?3500:7000}m/data=!3m1!1e3`],
+      ['Sentinel-2 (recent)', `https://browser.dataspace.copernicus.eu/?zoom=${p.zoom}&lat=${lat}&lng=${lng}`],
+      ['Esri Wayback (history)', `https://livingatlas.arcgis.com/wayback/#mapCenter=${lng}%2C${lat}%2C${p.zoom+1}`],
+      ['NASA Worldview', `https://worldview.earthdata.nasa.gov/?v=${(lng-d).toFixed(3)},${(lat-d).toFixed(3)},${(lng+d).toFixed(3)},${(lat+d).toFixed(3)}`]
+    ].map(([t,u]) => `<a href="${u}" target="_blank" rel="noopener">${t}</a>`).join('');
+  };
+  const dms = (v, pos, neg) => { const a = Math.abs(v), dd = Math.floor(a), mm = (a-dd)*60; return `${dd}°${mm.toFixed(1).padStart(4,'0')}′${v>=0?pos:neg}`; };
+  const radar = `<svg viewBox="0 0 70 70" fill="none" stroke="currentColor" stroke-width="1.2"><circle cx="35" cy="35" r="32" opacity=".4"/><circle cx="35" cy="35" r="20" opacity=".6"/><circle cx="35" cy="35" r="4" fill="#ffb547" stroke="none"/><path d="M35 1v68M1 35h68" opacity=".4"/></svg>`;
+
+  $('#projgrid').innerHTML = D.projects.map((p,i) => `
+    <article class="proj">
+      <div class="plate">
+        <div class="fallback">${radar}
+          <div class="co">${dms(p.lat,'N','S')} &nbsp;${dms(p.lng,'E','W')}</div>
+          <div class="why">Satellite tiles are loading. If they don't appear in this view, use the imagery links below.</div>
+        </div>
+        <div class="map" id="map${i}" aria-label="Satellite view of ${esc(p.name)}"></div>
+        <span class="code">${esc(p.code)}</span>
+        ${p.approx?'<span class="approx">Approx. site</span>':''}
+      </div>
+      <div class="proj-body">
+        <div class="proj-top">
+          <div><h3>${esc(p.name)}</h3><div class="where">${esc(p.where)}</div></div>
+          <span class="pill ${p.status}">${esc(p.statusLabel)}</span>
+        </div>
+        <div class="milestone"><span class="what">${esc(p.milestone.what)}</span><span class="when">${countdown(p)}</span></div>
+        <dl class="facts">${p.facts.map(f=>`<dt>${esc(f[0])}</dt><dd>${esc(f[1])}</dd>`).join('')}</dl>
+        <p class="note">${esc(p.note)} <a href="${esc(p.url)}" target="_blank" rel="noopener">Source</a></p>
+        <div class="sat-links">${links(p)}</div>
+      </div>
+    </article>`).join('');
+
+  // live satellite maps (Esri World Imagery); fallback plate stays if tiles are blocked
+  if (window.L){
+    D.projects.forEach((p,i) => {
+      const el = document.getElementById('map'+i);
+      const map = L.map(el, {zoomControl:true, scrollWheelZoom:false, attributionControl:true}).setView([p.lat,p.lng], p.zoom);
+      let ok = false;
+      const layer = L.tileLayer('https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}', {
+        maxZoom:18, attribution:'Esri, Maxar, Earthstar Geographics'
+      }).addTo(map);
+      el.style.visibility = 'hidden';
+      layer.on('tileload', () => { if (!ok){ ok = true; el.style.visibility = 'visible'; el.parentNode.querySelector('.fallback').hidden = true; } });
+      setTimeout(() => { if (!ok){ el.parentNode.querySelector('.why').textContent = "Satellite tiles didn't load. Check your connection, or use the imagery links below."; } }, 5000);
+      L.marker([p.lat,p.lng], {icon: L.divIcon({className:'pin', iconSize:[18,18]}), keyboard:false, interactive:false}).addTo(map);
+    });
+  } else {
+    document.querySelectorAll('.why').forEach(w => w.textContent = 'Map library unavailable. Use the imagery links below.');
+  }
+})();
+</script>
+
+</body>
+</html>

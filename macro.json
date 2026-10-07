@@ -1,0 +1,154 @@
+{
+ "asOf": "2026-10-06",
+ "kpis": [
+  {
+   "label": "Passenger demand (RPK)",
+   "value": "-0.8%",
+   "dir": "down",
+   "sub": "Aug 2026 y/y",
+   "note": "Load factor 85.1% (-0.9 pt). Excluding Middle East carriers: +0.6%.",
+   "url": "https://iata.org/en/pressroom/2026-releases/09-30-air-passenger-demand-slips-august/"
+  },
+  {
+   "label": "Air cargo demand (CTK)",
+   "value": "+4.4%",
+   "dir": "up",
+   "sub": "Aug 2026 y/y",
+   "note": "Capacity -0.1%; cargo load factor 46.0% (+2.0 pt). Yields up for the first time since April.",
+   "url": "https://www.iata.org/en/pressroom/2026-releases/09-29-air-cargo-demand-grows-august"
+  },
+  {
+   "label": "Jet fuel",
+   "value": "+79%",
+   "dir": "down",
+   "sub": "Aug y/y",
+   "note": "Up 8.3% month on month in August. IATA expects a 2026 average of $152/bbl.",
+   "url": "https://www.iata.org/en/pressroom/2026-releases/09-29-air-cargo-demand-grows-august"
+  },
+  {
+   "label": "Industry net profit",
+   "value": "$23B",
+   "dir": "down",
+   "sub": "2026F",
+   "note": "Margin 2.0%, down from a $41B forecast made in Dec 2025.",
+   "url": "https://afm.aero/iata-reports-121percent-global-jet-fuel-price-shock-in-2026-with-india-and-japan-most-exposed"
+  },
+  {
+   "label": "Boeing deliveries",
+   "value": "418",
+   "dir": "up",
+   "sub": "Jan–Aug",
+   "note": "Best Jan–Aug since 2018; 51 in August. Backlog 6,755 aircraft.",
+   "url": "https://www.airdatanews.com/boeing-delivers-51-aircraft-in-august-reaches-418-in-2026/"
+  },
+  {
+   "label": "Vietnam fleet",
+   "value": "258",
+   "dir": "up",
+   "sub": "registered aircraft",
+   "note": "Record high. Vietjet 107, Vietnam Airlines 94, Sun PhuQuoc Airways 21.",
+   "url": "https://vietnamnews.vn/economy/1800570/viet-nam-s-aircraft-fleet-hits-record-high-as-airlines-anticipate-growth.html"
+  }
+ ],
+ "regions": {
+  "pax": {
+   "title": "Passenger RPK by region, Aug 2026 y/y",
+   "src": "IATA, 30 Sep 2026",
+   "url": "https://iata.org/en/pressroom/2026-releases/09-30-air-passenger-demand-slips-august/",
+   "global": -0.8,
+   "rows": [
+    [
+     "China domestic",
+     5.8
+    ],
+    [
+     "Latin America",
+     5.3
+    ],
+    [
+     "Africa",
+     4.4
+    ],
+    [
+     "Japan domestic",
+     -2.0
+    ],
+    [
+     "North America",
+     -2.2
+    ],
+    [
+     "India domestic",
+     -7.5
+    ],
+    [
+     "Middle East",
+     -14.6
+    ]
+   ]
+  },
+  "cargo": {
+   "title": "Cargo CTK by region, Aug 2026 y/y",
+   "src": "IATA, 29 Sep 2026",
+   "url": "https://www.iata.org/en/pressroom/2026-releases/09-29-air-cargo-demand-grows-august",
+   "global": 4.4,
+   "rows": [
+    [
+     "North America",
+     6.6
+    ],
+    [
+     "Latin America",
+     5.1
+    ],
+    [
+     "Asia-Pacific",
+     4.3
+    ],
+    [
+     "Europe",
+     4.1
+    ],
+    [
+     "Africa",
+     3.0
+    ],
+    [
+     "Middle East",
+     1.0
+    ]
+   ]
+  }
+ },
+ "outlook": {
+  "src": "IATA via AFM, 1 Sep 2026",
+  "url": "https://afm.aero/iata-reports-121percent-global-jet-fuel-price-shock-in-2026-with-india-and-japan-most-exposed",
+  "rows": [
+   {
+    "label": "Airline fuel bill",
+    "a": 252,
+    "b": 350,
+    "fmt": "$%B"
+   },
+   {
+    "label": "Average jet fuel price",
+    "a": 90,
+    "b": 152,
+    "fmt": "$%/bbl"
+   },
+   {
+    "label": "Fuel share of operating cost",
+    "a": 25.4,
+    "b": 31.4,
+    "fmt": "%%"
+   },
+   {
+    "label": "Net margin",
+    "a": 3.9,
+    "b": 2.0,
+    "fmt": "%%",
+    "note": "2025 figure is IATA's earlier forecast for 2026"
+   }
+  ]
+ }
+}
